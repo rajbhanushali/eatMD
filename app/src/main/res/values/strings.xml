@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Meal App</string>
     <string name="action_settings">Settings</string>
+    <string name="feet"><font size="5">ft</font></string>
+    <string name="inches"><font size="5">in</font></string>
+    <string name="lbs"><font size="5">lbs</font></string>
+
 </resources>

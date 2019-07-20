@@ -52,7 +52,11 @@ public class MainActivity extends AppCompatActivity {
                 emailEntered = email.getText().toString();
                 passwordEntered = password.getText().toString();
 
-                signIn(emailEntered, passwordEntered);
+                if(emailEntered != "" && passwordEntered != "") {
+
+                    signIn(emailEntered, passwordEntered);
+
+                }
 
             }
         });
@@ -72,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signIn(String emailEntered, String passwordEntered){
+
         mAuth.signInWithEmailAndPassword(emailEntered, passwordEntered)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
