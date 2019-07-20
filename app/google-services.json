@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "886811965171",
+    "firebase_url": "https://eatmd-54cc2.firebaseio.com",
+    "project_id": "eatmd-54cc2",
+    "storage_bucket": "eatmd-54cc2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:886811965171:android:2a454fad3edf655c",
+        "android_client_info": {
+          "package_name": "io.paperplane.rajb.mealapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "886811965171-gebl83kkuaqf25hrb3rdq32no6ed8u5c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKUqJJJuyFT12RKo8XC4EHsG2YiAnv5MQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "886811965171-gebl83kkuaqf25hrb3rdq32no6ed8u5c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
