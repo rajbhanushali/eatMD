@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToSignUp(View v){
         Intent i = new Intent(MainActivity.this, SignUpActivity.class);
+        i.putExtra("cameFrom", "signing in");
         startActivity(i);
     }
 

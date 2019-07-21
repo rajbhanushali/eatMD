@@ -5,4 +5,6 @@
     <string name="inches"><font size="5">in</font></string>
     <string name="lbs"><font size="5">lbs</font></string>
 
+    <string name="hint"><font size="100">Hint!</font></string>
+
 </resources>

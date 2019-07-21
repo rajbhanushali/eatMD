@@ -23,8 +23,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
@@ -38,11 +41,16 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseDatabase db;
     private DatabaseReference ref;
 
+    private Intent next;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         getSupportActionBar().hide();
+
+        next = new Intent(SignUpActivity.this, PatientInfoActivity.class);
+
 
         email = findViewById(R.id.email_edit_text);
         password = findViewById(R.id.password_edit_text);
@@ -87,14 +95,12 @@ public class SignUpActivity extends AppCompatActivity {
                 //Intent i = new Intent(SignUpActivity.this, UserDetails.class);
                 //startActivity(i);
 
-                //signUp(email.getText().toString(), password.getText().toString());
+                signUp(email.getText().toString(), password.getText().toString());
 
                 Toast.makeText(SignUpActivity.this, "hi", Toast.LENGTH_LONG).show();
-                Intent i = new Intent(SignUpActivity.this, PatientInfoActivity.class);
-                startActivity(i);
+
             }
         });
-
     }
 
     private void signUp(final String emailEntered, String passwordEntered){
@@ -111,23 +117,26 @@ public class SignUpActivity extends AppCompatActivity {
                                     .setDisplayName(name.getText().toString())
                                     .build();
 
-                            user.updateProfile(profileUpdates)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Log.d(MainActivity.TAG, "User profile updated.");
-                                    }
-                                }
-                            });
+                            user.updateProfile(profileUpdates);
 
                             ref = db.getReference(user.getUid());
                             ref.child("dob").setValue(dobText.getText().toString());
                             ref.child("name").setValue(name.getText().toString());
                             ref.child("email").setValue(emailEntered);
 
-                            Intent i = new Intent(SignUpActivity.this, HomeActivity.class);
-                            startActivity(i);
+                            // Read from the database
+                            ref.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    startActivity(next);
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError error) {
+                                    // Failed to read value
+                                    Toast.makeText(SignUpActivity.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
                         } else {
                             // If sign in fails, display a message to the user.
