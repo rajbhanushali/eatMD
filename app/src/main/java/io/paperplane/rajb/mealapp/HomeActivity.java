@@ -1,5 +1,6 @@
 package io.paperplane.rajb.mealapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import java.util.ArrayList;
@@ -20,9 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity {
+
+    public static Context ctx;
+
     private TextView mTextMessage;
 
     private FirebaseUser user;
@@ -57,8 +62,9 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("My Profile");
+        setTitle("Today's Meals");
         String origin;
+        ctx = HomeActivity.this;
 
         try{
 
@@ -69,6 +75,8 @@ public class HomeActivity extends AppCompatActivity {
         }catch (Exception e){
             origin = "signing up";
         }
+
+        Log.d(MainActivity.TAG, "cbhsfdSDF" + origin);
 
         if (origin.equals("registering")) {
             setContentView(R.layout.activity_pairdoc);
@@ -89,55 +97,53 @@ public class HomeActivity extends AppCompatActivity {
             navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
             // Read from the database
-
-            List<RecipeActivity> recipeList;
+            List<RecipeActivity> anemiaList;
 
             //the recyclerview
             RecyclerView recyclerView;
 
-                //getting the recyclerview from xml
-                recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            //getting the recyclerview from xml
+            recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-                //initializing the productlist
-                recipeList = new ArrayList<>();
+            //initializing the productlist
+            anemiaList = new ArrayList<>();
 
+            //adding some items to our list
+            anemiaList.add(
+                    new RecipeActivity(
+                            1,
+                            "Veggie Stir Fry with Marinated Tofu or Chicken and Edamame",
+                            "Prep Time: 5 mins, Cook Time: 10 mins",
+                            4,
+                            6,
+                            R.drawable.thaisatay));
 
-                //adding some items to our list
-            recipeList.add(
-                        new RecipeActivity(
-                                1,
-                                "Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra)",
-                                "13.3 inch, Silver, 1.35 kg",
-                                4.3,
-                                60000,
-                                R.drawable.macbook));
+            anemiaList.add(
+                    new RecipeActivity(
+                            1,
+                            "Quinoa salad with tofu, toasted almonds, cranberries and tahini dressing",
+                            "Prep Time: 10 mins, Cook Time: 20 mins",
+                            5,
+                            4,
+                            R.drawable.quinoasalad));
 
-            recipeList.add(
-                        new RecipeActivity(
-                                1,
-                                "Dell Inspiron 7000 Core i5 7th Gen - (8 GB/1 TB HDD/Windows 10 Home)",
-                                "14 inch, Gray, 1.659 kg",
-                                4.3,
-                                60000,
-                                R.drawable.dellinspiron));
+            anemiaList.add(
+                    new RecipeActivity(
+                            1,
+                            "Pesto pasta with beans, peas and roasted capsicum",
+                            "Prep Time: 20 mins, Cook: 12 mins",
+                            5,
+                            5,
+                            R.drawable.pestopasta));
 
-            recipeList.add(
-                        new RecipeActivity(
-                                1,
-                                "Microsoft Surface Pro 4 Core m3 6th Gen - (4 GB/128 GB SSD/Windows 10)",
-                                "13.3 inch, Silver, 1.35 kg",
-                                4.3,
-                                60000,
-                                R.drawable.surface));
+            //creating recyclerview adapter
+            RecipeAdapter adapter = new RecipeAdapter(this, anemiaList);
 
-                //creating recyclerview adapter
-                RecipeAdapter adapter = new RecipeAdapter(this, recipeList);
+            //setting adapter to recyclerview
+            recyclerView.setAdapter(adapter);
 
-                //setting adapter to recyclerview
-                recyclerView.setAdapter(adapter);
-            }
 
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -155,6 +161,8 @@ public class HomeActivity extends AppCompatActivity {
                     //Log.w(TAG, "Failed to read value.", error.toException());
                 }
             });
+
+        }
 
         }
 

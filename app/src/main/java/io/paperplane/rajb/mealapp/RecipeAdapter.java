@@ -5,8 +5,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,15 +41,22 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ProductVie
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         //getting the product of the specified position
-        RecipeActivity product = productList.get(position);
-
+        final RecipeActivity product = productList.get(position);
         //binding the data with the viewholder views
         holder.textViewTitle.setText(product.getTitle());
         holder.textViewShortDesc.setText(product.getShortdesc());
         holder.textViewRating.setText(String.valueOf(product.getRating()));
-        holder.textViewPrice.setText(String.valueOf(product.getPrice()));
+        holder.textViewPrice.setText(String.valueOf(product.getPrice()) + "mg Iron");
 
         holder.imageView.setImageDrawable(mCtx.getResources().getDrawable(product.getImage()));
+
+        holder.button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                /// button click event
+                Toast.makeText(HomeActivity.ctx, product.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -62,6 +71,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ProductVie
 
         TextView textViewTitle, textViewShortDesc, textViewRating, textViewPrice;
         ImageView imageView;
+        Button button;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
@@ -71,6 +81,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ProductVie
             textViewRating = itemView.findViewById(R.id.textViewRating);
             textViewPrice = itemView.findViewById(R.id.textViewPrice);
             imageView = itemView.findViewById(R.id.imageView);
+            button = itemView.findViewById(R.id.button);
         }
     }
 }

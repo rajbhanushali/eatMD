@@ -54,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
                 if(emailEntered != "" && passwordEntered != "") {
 
-                    signIn(emailEntered, passwordEntered);
+                    //signIn(emailEntered, passwordEntered);
+                    Intent i = new Intent(MainActivity.this, HomeActivity.class);
+                    startActivity(i);
 
                 }
 
