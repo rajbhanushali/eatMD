@@ -2,6 +2,7 @@ package io.paperplane.rajb.mealapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,9 @@ public class HomeActivity extends AppCompatActivity {
 
     private Intent cameFrom;
 
+    private String origin;
+
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -46,13 +50,15 @@ public class HomeActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText("Home");
+                    setContentView(R.layout.activity_home);
+                    //mTextMessage.setText("Home");
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText("Dashboard");
+                    setContentView(R.layout.dashboard);
                     return true;
                 case R.id.navigation_notifications:
                     mTextMessage.setText("Notifications");
+                    //setContentView(R.layout.notifications);
                     return true;
             }
             return false;
@@ -63,7 +69,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Today's Meals");
-        String origin;
         ctx = HomeActivity.this;
 
         try{
@@ -118,7 +123,8 @@ public class HomeActivity extends AppCompatActivity {
                             "Prep Time: 5 mins, Cook Time: 10 mins",
                             4,
                             6,
-                            R.drawable.thaisatay));
+                            R.drawable.thaisatay,
+                            "http://www.bbcgoodfood.com/recipes/3219/thai-satay-stirfry/ "));
 
             anemiaList.add(
                     new RecipeActivity(
@@ -127,7 +133,7 @@ public class HomeActivity extends AppCompatActivity {
                             "Prep Time: 10 mins, Cook Time: 20 mins",
                             5,
                             4,
-                            R.drawable.quinoasalad));
+                            R.drawable.quinoasalad,"http://www.shelikesfood.com/1/post/2016/04/kale-quinoa-salad-cherry-tomatoes-lemon-tahini-dressing.html"));
 
             anemiaList.add(
                     new RecipeActivity(
@@ -136,7 +142,8 @@ public class HomeActivity extends AppCompatActivity {
                             "Prep Time: 20 mins, Cook: 12 mins",
                             5,
                             5,
-                            R.drawable.pestopasta));
+                            R.drawable.pestopasta,
+                            "http://www.foodnetwork.com/recipes/ina-garten/pasta-pesto-and-peas-recipe2.html"));
 
             //creating recyclerview adapter
             RecipeAdapter adapter = new RecipeAdapter(this, anemiaList);
@@ -164,6 +171,11 @@ public class HomeActivity extends AppCompatActivity {
 
         }
 
+        }
+
+        public void openURL(String url){
+            Intent openURL = new Intent(android.content.Intent.ACTION_VIEW);
+            startActivity(openURL);
         }
 
     }

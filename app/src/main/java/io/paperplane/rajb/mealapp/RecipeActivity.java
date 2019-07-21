@@ -7,14 +7,16 @@ public class RecipeActivity {
     private double rating;
     private double price;
     private int image;
+    private String link;
 
-    public RecipeActivity(int id, String title, String shortdesc, double rating, double price, int image) {
+    public RecipeActivity(int id, String title, String shortdesc, double rating, double price, int image, String link) {
         this.id = id;
         this.title = title;
         this.shortdesc = shortdesc;
         this.rating = rating;
         this.price = price;
         this.image = image;
+        this.link = link;
     }
 
     public int getId() {
@@ -40,4 +42,6 @@ public class RecipeActivity {
     public int getImage() {
         return image;
     }
+
+    public String getLink(){return link;}
 }

@@ -2,6 +2,8 @@ package io.paperplane.rajb.mealapp;
 
 import android.content.Context;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +56,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ProductVie
             @Override
             public void onClick(View v) {
                 /// button click event
-                Toast.makeText(HomeActivity.ctx, product.getTitle(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.ctx, "Added:" + product.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.openRecipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent( Intent.ACTION_VIEW);
+                i.setData(Uri.parse(product.getLink()));
+                mCtx.startActivity(i);
             }
         });
 
@@ -71,7 +82,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ProductVie
 
         TextView textViewTitle, textViewShortDesc, textViewRating, textViewPrice;
         ImageView imageView;
-        Button button;
+        Button button, openRecipe;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
@@ -82,6 +93,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ProductVie
             textViewPrice = itemView.findViewById(R.id.textViewPrice);
             imageView = itemView.findViewById(R.id.imageView);
             button = itemView.findViewById(R.id.button);
+            openRecipe = itemView.findViewById(R.id.buttonopen);
         }
     }
 }
